@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const schema = new Schema({
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: {
+    type: String,
+    default: "",
+  },
   firstname: {
     type: String,
     default: "",
