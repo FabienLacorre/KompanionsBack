@@ -1,6 +1,16 @@
-const errorHandler = (res, err) => {
+const errorHandler = (res, err, customMessage) => {
+  console.log("----------------");
+  console.log("----- ERR ------");
+  console.log("----------------");
   console.log(err);
-  res.send(500);
+  console.log("----------------");
+  console.log("----------------");
+  console.log("----------------");
+  let message = "Erreur interne";
+  if (customMessage) {
+    message = customMessage;
+  }
+  res.send(500, message);
 };
 
 module.exports = {
