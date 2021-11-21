@@ -20,11 +20,27 @@ const corsOptions ={
 
 app.use(cors(corsOptions));
 
+const Hoodie = {
+  id: 1,
+  name: 'Hoodie',
+  type: 'Chat Europeen',
+  img: 'assets/hoddie.jpg',
+}
+
+const Capuche = {
+  id: 2,
+  name: 'capuche',
+  type: 'Lapin bélier',
+  img: 'assets/capuche.jpg',
+}
+
+const PitPote = {
+  id: 3,
+  name: 'PtiPote',
+  type: 'Poisson rouge',
+  img: 'assets/ptipote.jpg',
+}
+
 app.get('/pets/dummy', (req, res) => {
-  console.log("PASS IN THE DUMMY REQUEST");
-  res.send({
-    id: 0,
-    userId: 0,
-    name: 'Dummy',
-  })
+  res.send([Hoodie, Capuche, PitPote]);
 })
