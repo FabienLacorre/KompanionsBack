@@ -8,10 +8,6 @@ const schema = new Schema({
     type: String,
     default: "",
   },
-  race: {
-    Type: ObjectId,
-    ref: "Race",
-  },
 });
 
 const Pet = mongoose.model("Pet", schema);

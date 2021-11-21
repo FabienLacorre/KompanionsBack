@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 router.post("/add", async (req, res) => {
   const { name } = req.body;
   try {
-    await Race.create({ name });
-    res.send(200);
+    const createdRace = await Race.create({ name });
+    res.send(createdRace);
   } catch (err) {
     errorHandler(res, err, "Impossible d'ajouter une nouvelle race.");
   }
