@@ -1,21 +1,44 @@
 const router = require("express").Router();
 const { Race } = require("./schema");
+const { errorHandler } = require("../../utils");
 
-router.get("/", (req, res) => {
-  console.log("RACE ROUTE");
-  res.send(200);
+router.get("/", async (req, res) => {
+  try {
+    const races = await Race.find({}).exec();
+    res.send(races);
+  } catch (err) {
+    errorHandler(res, err);
+  }
 });
 
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
   const { name } = req.body;
-  Race.create({ name })
-    .then(() => {
-      res.send(200);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.send(500);
-    });
+  try {
+    await Race.create({ name });
+    res.send(200);
+  } catch (err) {
+    errorHandler(res, err);
+  }
+});
+
+router.post("/edit", async (req, res) => {
+  const { id, name } = req.body;
+  try {
+    await Race.findByIdAndUpdate(id, { name }).exec();
+    res.send(200);
+  } catch (err) {
+    errorHandler(res, err);
+  }
+});
+
+router.delete("/remove", async (req, res) => {
+  const { id } = req.body;
+  try {
+    await Race.findByIdAndRemove(id).exec();
+    res.send(200);
+  } catch (err) {
+    errorHandler(res, err);
+  }
 });
 
 module.exports = router;
