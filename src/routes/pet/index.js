@@ -17,7 +17,7 @@ router.post("/add", async (req, res) => {
     const createdPet = await Pet.create({ name });
     res.send(createdPet);
   } catch (err) {
-    errorHandler(res, err, "Impossible d'ajouter une nouveau Kompanion.");
+    errorHandler(res, err, "Impossible d'ajouter un nouveau Kompanion.");
   }
 });
 
