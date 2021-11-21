@@ -21,7 +21,7 @@ router.post("/add", async (req, res) => {
     const createdUser = await User.create({ firstname, lastname });
     res.send(createdUser);
   } catch (err) {
-    errorHandler(res, err, "Impossible d'ajouter un nouveau utilisateur.");
+    errorHandler(res, err, "Impossible d'ajouter un nouvel utilisateur.");
   }
 });
 
