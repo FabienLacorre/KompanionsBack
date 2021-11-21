@@ -1,27 +1,26 @@
+require('dotenv').config();
+require('./mongoose');
 const express = require('express')
 var cors = require('cors')
 const routes = require('./routes');
+var bodyParser = require('body-parser')
 
 const app = express();
 const port = 3000;
-
-app.use('/', routes);
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
-});
-
 const corsOptions ={
   origin: '*',
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
 
+app.listen(port, () => {
+  console.log(`Running on 3000`)
+});
+
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', routes);
 
 const Hoodie = {
   id: 1,

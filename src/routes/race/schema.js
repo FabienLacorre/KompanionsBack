@@ -1,14 +1,14 @@
-const Race = require('./schema')
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const RaceSchema = new Schema({
+const schema = new Schema({
     name: {
         type:String,
         default:'',
     },
 });
 
-const Race = mongoose.model('Race', RaceSchema);
+const Race = mongoose.model('Race', schema);
 
 module.exports = { Race };
 
