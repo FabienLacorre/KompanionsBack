@@ -36,7 +36,7 @@ router.post("/connect", async (req, res) => {
   }
 });
 
-router.post('/editPassword', async (req, res) => {
+router.post("/editPassword", async (req, res) => {
   const { email, password, confirmPassword } = req.body;
 
   try {
@@ -47,10 +47,10 @@ router.post('/editPassword', async (req, res) => {
     const hash = await hashPassword(password);
     await User.findOneAndUpdate({ email }, { password: hash }, { new: true });
     res.send(200);
-  } catch(err) {
+  } catch (err) {
     errorHandler(res, err, "Impossible de modifier le mot de passe.");
   }
-})
+});
 
 router.post("/add", async (req, res) => {
   const { firstname, lastname, password, email } = req.body;
@@ -68,8 +68,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.post("/edit", async (req, res) => {
-  const { id, firstname, lastname, email } = req.body;
+router.post("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const { firstname, lastname, email } = req.body;
   try {
     await User.findByIdAndUpdate(id, { firstname, lastname, email }).exec();
     res.send(200);
@@ -78,8 +79,8 @@ router.post("/edit", async (req, res) => {
   }
 });
 
-router.delete("/remove", async (req, res) => {
-  const { id } = req.body;
+router.delete("/remove/:id", async (req, res) => {
+  const { id } = req.params;
   try {
     await User.findByIdAndRemove(id).exec();
     res.send(200);

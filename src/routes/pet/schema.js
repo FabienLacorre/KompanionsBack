@@ -4,9 +4,28 @@ const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
 const schema = new Schema({
+  // STRING 
   name: {
     type: String,
     default: "",
+  },
+  adoptionLocation: {
+    type: String,
+    default: "",
+  },
+  identificationNumber: {
+    type: String,
+    default: "",
+  },
+  // DATES
+  birthDate: {
+    type: Date,
+    default: null,
+  },
+  // OBJECT ID 
+  race: {
+    type: ObjectId,
+    ref: "Race",
   },
 });
 

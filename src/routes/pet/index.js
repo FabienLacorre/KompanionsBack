@@ -12,27 +12,42 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/add", async (req, res) => {
-  const { name } = req.body;
+  const { name, adoptionLocation, identificationNumber, birthDate, race } =
+    req.body;
   try {
-    const createdPet = await Pet.create({ name });
+    const createdPet = await Pet.create({
+      name,
+      adoptionLocation,
+      identificationNumber,
+      birthDate,
+      race,
+    });
     res.send(createdPet);
   } catch (err) {
     errorHandler(res, err, "Impossible d'ajouter un nouveau Kompanion.");
   }
 });
 
-router.post("/edit", async (req, res) => {
-  const { id, name } = req.body;
+router.post("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, adoptionLocation, identificationNumber, birthDate, race } =
+    req.body;
   try {
-    await Pet.findByIdAndUpdate(id, { name }).exec();
+    await Pet.findByIdAndUpdate(id, {
+      name,
+      adoptionLocation,
+      identificationNumber,
+      birthDate,
+      race,
+    }).exec();
     res.send(200);
   } catch (err) {
     errorHandler(res, err, "Impossible de modifier ce Kompanion.");
   }
 });
 
-router.delete("/remove", async (req, res) => {
-  const { id } = req.body;
+router.delete("/remove/id", async (req, res) => {
+  const { id } = req.params;
   try {
     await Pet.findByIdAndRemove(id).exec();
     res.send(200);

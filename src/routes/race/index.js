@@ -25,8 +25,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.post("/edit", async (req, res) => {
-  const { id, name } = req.body;
+router.post("/edit/id", async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
   try {
     await Race.findByIdAndUpdate(id, { name }).exec();
     res.send(200);
@@ -35,8 +36,8 @@ router.post("/edit", async (req, res) => {
   }
 });
 
-router.delete("/remove", async (req, res) => {
-  const { id } = req.body;
+router.delete("/remove/:id", async (req, res) => {
+  const { id } = req.params;
   try {
     await Race.findByIdAndRemove(id).exec();
     res.send(200);
