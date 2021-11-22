@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { User } = require("./schema");
-const { errorHandler } = require("../../utils");
+const { errorHandler, hashPassword } = require("../../utils");
 const bcrypt = require("bcrypt");
 
 router.get("/", async (req, res) => {
@@ -36,11 +36,26 @@ router.post("/connect", async (req, res) => {
   }
 });
 
+router.post('/editPassword', async (req, res) => {
+  const { email, password, confirmPassword } = req.body;
+
+  try {
+    if (password !== confirmPassword) {
+      errorHandler(res, {}, "les mots de passe ne correspondent pas.");
+      return;
+    }
+    const hash = await hashPassword(password);
+    await User.findOneAndUpdate({ email }, { password: hash }, { new: true });
+    res.send(200);
+  } catch(err) {
+    errorHandler(res, err, "Impossible de modifier le mot de passe.");
+  }
+})
+
 router.post("/add", async (req, res) => {
   const { firstname, lastname, password, email } = req.body;
   try {
-    const saltRounds = 10;
-    const hash = await bcrypt.hash(password, saltRounds);
+    const hash = await hashPassword(password);
     const createdUser = await User.create({
       email,
       firstname,

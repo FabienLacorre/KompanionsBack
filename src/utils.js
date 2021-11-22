@@ -1,3 +1,11 @@
+const bcrypt = require("bcrypt");
+
+const hashPassword = async (password) => {
+  const saltRounds = 10;
+  const hash = await bcrypt.hash(password, saltRounds);
+  return hash;
+};
+
 const errorHandler = (res, err, customMessage) => {
   console.log("----------------");
   console.log("----- ERR ------");
@@ -15,4 +23,5 @@ const errorHandler = (res, err, customMessage) => {
 
 module.exports = {
   errorHandler,
+  hashPassword,
 };
