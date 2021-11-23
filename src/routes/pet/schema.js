@@ -17,6 +17,10 @@ const schema = new Schema({
     type: String,
     default: "",
   },
+   img: {
+    type: String,
+    default: "",
+  },
   // DATES
   birthDate: {
     type: Date,
@@ -26,7 +30,9 @@ const schema = new Schema({
   race: {
     type: ObjectId,
     ref: "Race",
+    default: null,
   },
+ 
 });
 
 const Pet = mongoose.model("Pet", schema);

@@ -4,7 +4,9 @@ const { errorHandler } = require("../../utils");
 
 router.get("/", async (req, res) => {
   try {
-    const pets = await Pet.find({}).exec();
+    let pets = await Pet.find({})
+    .populate('race')
+    .lean().exec();
     res.send(pets);
   } catch (err) {
     errorHandler(res, err, "Impossible de récuperer la liste des Kompanions.");
