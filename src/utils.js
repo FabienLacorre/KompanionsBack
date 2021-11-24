@@ -6,7 +6,7 @@ const hashPassword = async (password) => {
   return hash;
 };
 
-const errorHandler = (res, err, customMessage) => {
+const errorHandler = (res, err, customMessage, code) => {
   console.log("----------------");
   console.log("----- ERR ------");
   console.log("----------------");
@@ -18,7 +18,7 @@ const errorHandler = (res, err, customMessage) => {
   if (customMessage) {
     message = customMessage;
   }
-  res.send(500, message);
+  res.send(code != null ? code : 500, message);
 };
 
 module.exports = {

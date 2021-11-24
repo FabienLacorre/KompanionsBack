@@ -27,23 +27,18 @@ router.post("/connect", async (req, res) => {
     if (user) {
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (isPasswordValid) {
-
         const expireIn = 24 * 60 * 60;
-        const token    = jwt.sign({
-            user: user
-        },
+        const token = jwt.sign(
+        {user: user},
         SECRET_KEY,
-        {
-            expiresIn: expireIn
-        });
-
+        {expiresIn: expireIn});
         res.header('Authorization', 'Bearer ' + token);
         res.send(user);
       } else {
-        errorHandler(res, null, "Mot de passe incorrect.");
+        errorHandler(res, null, "Mot de passe incorrect.", 401);
       }
     } else {
-      errorHandler(res, null, "Utilisateur introuvable.");
+      errorHandler(res, null, "Utilisateur introuvable.", 401);
     }
   } catch (err) {
     errorHandler(res, err, "Impossible de se connecter.");
