@@ -2,6 +2,9 @@ const router = require("express").Router();
 const { User } = require("./schema");
 const { errorHandler, hashPassword } = require("../../utils");
 const bcrypt = require("bcrypt");
+const jwt    = require('jsonwebtoken');
+
+const SECRET_KEY = process.env.SECRET_KEY_JWT;
 
 router.get("/", async (req, res) => {
   try {
@@ -24,6 +27,17 @@ router.post("/connect", async (req, res) => {
     if (user) {
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (isPasswordValid) {
+
+        const expireIn = 24 * 60 * 60;
+        const token    = jwt.sign({
+            user: user
+        },
+        SECRET_KEY,
+        {
+            expiresIn: expireIn
+        });
+
+        res.header('Authorization', 'Bearer ' + token);
         res.send(user);
       } else {
         errorHandler(res, null, "Mot de passe incorrect.");
