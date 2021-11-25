@@ -65,14 +65,23 @@ router.post("/editPassword", checkJWT, async (req, res) => {
   }
 });
 
-router.post("/add", checkJWT, async (req, res) => {
-  const { firstname, lastname, password, email } = req.body;
+router.post("/add", async (req, res) => {
+  const { password, confirmPassword, email } = req.body;
+  if (password != confirmPassword){
+    errorHandler(res, {}, "les mots de passe ne correspondent pas.");
+    return;
+  }
+
+  const user = await User.findOne({ email }).exec()
+  if (user) {
+    errorHandler(res, {}, "Cette adresse email est déja utilisée.");
+    return;
+  }
+  
   try {
     const hash = await hashPassword(password);
     const createdUser = await User.create({
       email,
-      firstname,
-      lastname,
       password: hash,
     });
     res.send(createdUser);
