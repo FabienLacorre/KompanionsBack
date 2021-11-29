@@ -7,8 +7,8 @@ const routesEvent = require('./routes/event');
 const { checkJWT } = require("./middleware/security");
 
 router.use("/user", routesUser);
-router.use("/pet", checkJWT, routesPet);
-router.use("/race", routesRace);
 router.use('/event', routesEvent);
+router.use("/race", routesRace);
+router.use("/pet", checkJWT, routesPet);
 
 module.exports = router;

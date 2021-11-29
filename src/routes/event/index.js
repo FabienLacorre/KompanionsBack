@@ -1,4 +1,4 @@
-const router = require("../user");
+const router = require("express").Router();
 const { Event } = require("./schema");
 const { errorHandler } = require("../../utils");
 
@@ -31,17 +31,6 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    await Event.findByIdAndDelete(id).exec();
-    res.send(200);
-  } catch (err) {
-    errorHandler(res, err, "Impossible de supprimer l'evenement.");
-  }
-  res.send(200);
-});
-
 router.post("/edit/:id", async (req, res) => {
   const { name, date } = req.body;
   const { id } = req.params;
@@ -55,6 +44,17 @@ router.post("/edit/:id", async (req, res) => {
   } catch (err) {
     errorHandler(res, err, "Impossible de modifier l'evenement.");
   }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Event.findByIdAndDelete(id).exec();
+    res.send(200);
+  } catch (err) {
+    errorHandler(res, err, "Impossible de supprimer l'evenement.");
+  }
+  res.send(200);
 });
 
 module.exports = router;
