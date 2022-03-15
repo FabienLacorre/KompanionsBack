@@ -4,9 +4,7 @@ const { errorHandler } = require("../../utils");
 
 router.get("/", async (req, res) => {
   try {
-    let pets = await Pet.find({})
-    .populate('race')
-    .lean().exec();
+    let pets = await Pet.find({}).populate("race").lean().exec();
     res.send(pets);
   } catch (err) {
     errorHandler(res, err, "Impossible de récuperer la liste des Kompanions.");
@@ -16,6 +14,7 @@ router.get("/", async (req, res) => {
 router.post("/add", async (req, res) => {
   const { name, adoptionLocation, identificationNumber, birthDate, race } =
     req.body;
+  console.log(req.body);
   try {
     const createdPet = await Pet.create({
       name,
@@ -48,7 +47,7 @@ router.post("/edit/:id", async (req, res) => {
   }
 });
 
-router.delete("/remove/id", async (req, res) => {
+router.delete("/remove/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await Pet.findByIdAndRemove(id).exec();

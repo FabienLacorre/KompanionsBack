@@ -22,7 +22,7 @@ router.get("/", checkJWT, async (req, res) => {
 
 router.post("/connect", async (req, res) => {
   const { email, password } = req.body;
-
+  
   console.log(req.body);
   try {
     const user = await User.findOne({ email }).lean().exec();
@@ -39,12 +39,15 @@ router.post("/connect", async (req, res) => {
         user.token = token;
         res.send(user);
       } else {
+        console.log("Mot de passe incorrect.")
         errorHandler(res, null, "Mot de passe incorrect.", 401);
       }
     } else {
+      console.log("Utilisateur introuvable.")
       errorHandler(res, null, "Utilisateur introuvable.", 401);
     }
   } catch (err) {
+    console.log("Impossible de se connecter.")
     errorHandler(res, err, "Impossible de se connecter.");
   }
 });
