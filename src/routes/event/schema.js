@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const schema = new Schema({
+  petId: {
+    type: Schema.Types.ObjectId,
+    ref: "Pet",
+  },
   name: {
     type: String,
     default: "",
@@ -9,6 +13,10 @@ const schema = new Schema({
   date: {
     type: Date,
     default: null,
+  },
+  numberDays: {
+    type: Number,
+    default: 0,
   },
 });
 

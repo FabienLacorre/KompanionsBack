@@ -11,6 +11,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    let pets = await Pet.findOne({ _id: req.params.id })
+      .populate("race")
+      .lean()
+      .exec();
+    res.send(pets);
+  } catch (err) {
+    errorHandler(res, err, "Impossible de récuperer la liste des Kompanions.");
+  }
+});
+
 router.post("/add", async (req, res) => {
   const { name, adoptionLocation, identificationNumber, birthDate, race } =
     req.body;
