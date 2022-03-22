@@ -4,7 +4,8 @@
   "description": "Kompanions back end app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js -e ejs,js,css,html,jpg,png,scss"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "express": "^4.17.1",
     "getenv": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.13"
+    "mongoose": "^6.0.13",
+    "nodemon": "^2.0.15"
   }
 }
